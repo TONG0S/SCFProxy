@@ -13,8 +13,7 @@ else:
     from mitmproxy.net.http import Headers
 
 
-with open('cities.txt', 'r') as f:
-    scf_servers = [line.split()[1].strip() for line in f]
+scf_servers=["https://service-xxxxxxxx.tencentcs.com/release/proxys"]
 
 
 css = """pre {
@@ -75,7 +74,8 @@ def response(flow: mitmproxy.http.HTTPFlow):
 
     elif status == 200:
         body = flow.response.content.decode("utf-8")
-        resp = json.loads(body)
+        resp = json.loads(body)['body']
+        resp=json.loads(resp)
         headers = resp["headers"]
         raw_content = b64decode(resp["content"])
 
